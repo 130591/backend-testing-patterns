@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "isolatedModules": true,
     "ignoreDeprecations": "6.0"
   },
