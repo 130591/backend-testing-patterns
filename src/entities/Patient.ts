@@ -32,10 +32,10 @@ export class Patient {
   @Column({ type: 'text', nullable: true })
   address!: string | null
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   emergencyContact!: string | null
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   bloodType!: string | null
 
   @Column('text', { array: true, default: '{}' })

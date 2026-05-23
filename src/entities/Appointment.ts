@@ -30,7 +30,7 @@ export class Appointment {
   @Column({ type: 'text', nullable: true })
   notes!: string | null
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   cancellationReason!: string | null
 
   @Column({ type: 'timestamp', nullable: true })

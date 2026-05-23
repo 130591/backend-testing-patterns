@@ -16,7 +16,7 @@ export class MedicalRecord {
   @Column()
   doctorId!: number
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   appointmentId!: number | null
 
   @Column({ type: 'text', nullable: true })

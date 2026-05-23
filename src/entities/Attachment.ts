@@ -25,7 +25,7 @@ export class Attachment {
   @Column({ type: 'int' })
   size!: number
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   description!: string | null
 
   @CreateDateColumn()

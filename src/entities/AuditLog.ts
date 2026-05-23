@@ -5,7 +5,7 @@ export class AuditLog {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   userId!: number | null
 
   @Column()
@@ -14,7 +14,7 @@ export class AuditLog {
   @Column()
   entity!: string
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   entityId!: number | null
 
   @Column({ type: 'jsonb', nullable: true })
@@ -23,7 +23,7 @@ export class AuditLog {
   @Column({ type: 'jsonb', nullable: true })
   newValue!: Record<string, unknown> | null
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   ipAddress!: string | null
 
   @CreateDateColumn()

@@ -15,13 +15,13 @@ export class UserAccount {
   @Column({ type: 'enum', enum: Role })
   role!: Role
 
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   referenceId!: number | null
 
   @Column({ default: false })
   twoFactorEnabled!: boolean
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   twoFactorSecret!: string | null
 
   @Column({ default: true })
