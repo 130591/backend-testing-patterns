@@ -1,0 +1,3 @@
+describe('POST /appointments', () => {
+    
+})
