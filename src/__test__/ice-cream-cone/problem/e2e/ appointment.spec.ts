@@ -1,8 +1,22 @@
 import request from 'supertest'
-import { AppointmentStatus } from "../../../../enums"
+import type { Application } from 'express'
 import { createApp } from '../../../../app'
+import { setupDatabase, truncateDatabase, closeDatabase } from '../../../helpers/db'
 
-const app = createApp()
+let app: Application
+
+beforeAll(async () => {
+  await setupDatabase()
+  app = createApp()
+})
+
+beforeEach(async () => {
+  await truncateDatabase()
+})
+
+afterAll(async () => {
+  await closeDatabase()
+})
 
 
 describe('POST /appointments', () => {
@@ -20,8 +34,10 @@ describe('POST /appointments', () => {
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -31,7 +47,7 @@ describe('POST /appointments', () => {
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     // 4. Finalmente, cancela
@@ -61,8 +77,10 @@ describe('PATCH /appointments/:id/complete', () => {
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -72,7 +90,7 @@ describe('PATCH /appointments/:id/complete', () => {
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     await request(app).patch(`/appointments/${appointment.body.id}/confirm`)
@@ -104,8 +122,10 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -114,7 +134,7 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     const record = await request(app).post('/medical-records').send({
@@ -148,8 +168,10 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -158,7 +180,7 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     const record = await request(app).post('/medical-records').send({
@@ -194,8 +216,10 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -204,7 +228,7 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     const record = await request(app).post('/medical-records').send({
@@ -240,8 +264,10 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -250,7 +276,7 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     const record = await request(app).post('/medical-records').send({
@@ -286,8 +312,10 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
     const doctor = await request(app).post('/doctors').send({
       name: 'Dra. Maria',
       crm: 'CRM12345',
+      email: 'maria@email.com',
+      phone: '11988887777',
       specialty: 'CARDIOLOGY',
-      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY'],
+      availableDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
       consultationDuration: 30,
     })
 
@@ -296,7 +324,7 @@ describe('POST /prescriptions — validação de medicamentos (ANTIPATTERN E2E)'
       patientId: patient.body.id,
       doctorId: doctor.body.id,
       dateTime: twoHoursFromNow.toISOString(),
-      type: 'CHECKUP',
+      type: 'FIRST_VISIT',
     })
 
     const record = await request(app).post('/medical-records').send({
