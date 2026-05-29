@@ -1,6 +1,6 @@
 import request from 'supertest'
-import { AppointmentStatus } from "../../../enums"
-import { createApp } from '../../../app'
+import { AppointmentStatus } from "../../../../enums"
+import { createApp } from '../../../../app'
 
 const app = createApp()
 
