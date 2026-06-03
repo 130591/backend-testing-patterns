@@ -24,10 +24,8 @@ afterAll(async () => {
   await closeDatabase()
 })
 
-describe('AppointmentRepository', () => {
-  it('deve detectar sobreposição', async () => {
-    // TODO: implementar teste
-    
+const factory = {
+  createEntities: async () => {
     const doctor = await doctorRepo.create({ 
       name: 'Dr. Smith', crm: '12345', 
       email: 'dr.smith@example.com', 
@@ -46,7 +44,15 @@ describe('AppointmentRepository', () => {
       dateOfBirth: '1990-01-01',
       phone: '123456789',
       email: 'john@example.com'
-    } as any)
+     } as any)  
+     return { patient, doctor }
+   }
+}
+
+describe('AppointmentRepository', () => {
+  it('deve detectar sobreposição', async () => {
+    // TODO: implementar teste
+    const { patient, doctor } = await factory.createEntities()
 
     // CENARIO
     const startAppointment = new Date()
@@ -76,6 +82,53 @@ describe('AppointmentRepository', () => {
       dateTime: startAppointment,
       endTime: endAppointment
     }))
+  })
+
+  it('deve testar se aceita que proxima consulta comeca no fim da anterior', async () => {
+     
+    const { patient, doctor } = await factory.createEntities()
+
+    // CENARIO
+    const startAppointment = new Date()
+    const endAppointment = new Date(startAppointment.getTime() + 60 * 60 * 1000) // 1 hour later
+
+    await appointmentRepo.create({
+      doctorId: doctor.id,
+      patientId: patient.id,
+      status: AppointmentStatus.SCHEDULED,
+      type: AppointmentType.FOLLOW_UP,
+      dateTime: startAppointment,
+      endTime: endAppointment
+    })
+
+    const newAppointmentStart = new Date(endAppointment.getTime()) // exatamente no fim da anterior
+    const newAppointmentEnd = new Date(newAppointmentStart.getTime() + 60 * 60 * 1000) // 1 hour later
+
+    const result = await appointmentRepo.findConflicting(doctor.id, newAppointmentStart, newAppointmentEnd)
+
+    expect(result).toHaveLength(0)
+    expect(result).toStrictEqual([])
+  })
+
+  it("deve permitir datas sobrepostas se uma delas tiver status cancelado", async () => {
+
+    const { patient, doctor } = await factory.createEntities()
+    const startAppointment = new Date()
+    const endAppointment = new Date(startAppointment.getTime() + 60 * 60 * 1000) // 1 hour later
+
+    await appointmentRepo.create({
+      doctorId: doctor.id,
+      patientId: patient.id,
+      status: AppointmentStatus.CANCELLED,
+      type: AppointmentType.FOLLOW_UP,
+      dateTime: startAppointment,
+      endTime: endAppointment
+    })
+
+    const result = await appointmentRepo.findConflicting(doctor.id, startAppointment, endAppointment)
+
+    expect(result).toHaveLength(0)
+    expect(result).toStrictEqual([])
   })
 })
 
