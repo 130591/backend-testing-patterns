@@ -1,8 +1,8 @@
-import { AppointmentRepository } from '../../../repositories/AppointmentRepository'
-import { DoctorRepository } from '../../../repositories/DoctorRepository'
-import { PatientRepository } from '../../../repositories/PatientRepository'
-import { AppointmentStatus } from '../../../enums'
-import { setupDatabase, truncateDatabase, closeDatabase } from '../../helpers/db'
+import { AppointmentRepository } from '../../../../repositories/AppointmentRepository'
+import { DoctorRepository } from '../../../../repositories/DoctorRepository'
+import { PatientRepository } from '../../../../repositories/PatientRepository'
+import { AppointmentStatus } from '../../../../enums'
+import { setupDatabase, truncateDatabase, closeDatabase } from '../../../helpers/db'
 
 let appointmentRepo: AppointmentRepository
 let doctorRepo: DoctorRepository

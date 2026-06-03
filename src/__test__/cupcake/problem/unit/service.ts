@@ -1,10 +1,10 @@
-import { AppointmentStatus } from "../../../enums"
-import { AppointmentRepository } from "../../../repositories/AppointmentRepository"
-import { AuditLogRepository } from "../../../repositories/AuditLogRepository"
-import { DoctorRepository } from "../../../repositories/DoctorRepository"
-import { PatientRepository } from "../../../repositories/PatientRepository"
-import { AppointmentService } from "../../../services/AppointmentService"
-import { AuditLogService } from "../../../services/AuditLogService"
+import { AppointmentStatus } from "../../../../enums"
+import { AppointmentRepository } from "../../../../repositories/AppointmentRepository"
+import { AuditLogRepository } from "../../../../repositories/AuditLogRepository"
+import { DoctorRepository } from "../../../../repositories/DoctorRepository"
+import { PatientRepository } from "../../../../repositories/PatientRepository"
+import { AppointmentService } from "../../../../services/AppointmentService"
+import { AuditLogService } from "../../../../services/AuditLogService"
 
 jest.mock('../../../repositories/AppointmentRepository')
 jest.mock('../../../repositories/DoctorRepository')
