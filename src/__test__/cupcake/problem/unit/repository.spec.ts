@@ -6,10 +6,10 @@ import { PatientRepository } from "../../../../repositories/PatientRepository"
 import { AppointmentService } from "../../../../services/AppointmentService"
 import { AuditLogService } from "../../../../services/AuditLogService"
 
-jest.mock('../../../repositories/AppointmentRepository')
-jest.mock('../../../repositories/DoctorRepository')
-jest.mock('../../../repositories/PatientRepository')
-jest.mock('../../../services/AuditLogService')
+jest.mock('../../../../repositories/AppointmentRepository')
+jest.mock('../../../../repositories/DoctorRepository')
+jest.mock('../../../../repositories/PatientRepository')
+jest.mock('../../../../services/AuditLogService')
 
 const makeSut = () => {
   const appointmentRepo = new AppointmentRepository() as jest.Mocked<AppointmentRepository>

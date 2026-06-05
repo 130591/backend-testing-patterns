@@ -35,7 +35,8 @@ describe('AnalyticsService', () => {
       andWhere: jest.fn().mockReturnThis(),
       groupBy: jest.fn().mockReturnThis(),
       having: jest.fn().mockReturnThis(),
-      getRawMany: jest.fn().mockResolvedValue([{ count: 2 }]),
+      // returningPatients = returningResult.length → 2 grupos para "inventar" 2
+      getRawMany: jest.fn().mockResolvedValue([{ count: 1 }, { count: 1 }]),
       getRawOne: jest.fn().mockResolvedValue({ count: 3 }),
       getCount: jest.fn()
                   .mockResolvedValueOnce(5)
@@ -45,6 +46,8 @@ describe('AnalyticsService', () => {
     jest.spyOn(AppDataSource, 'getRepository').mockReturnValue({
       createQueryBuilder: jest.fn().mockReturnValue(qb),
     } as any)
+    // newPatients usa AppDataSource.createQueryBuilder() direto (não via getRepository)
+    jest.spyOn(AppDataSource, 'createQueryBuilder').mockReturnValue(qb as any)
 
     const service = new AnalyticsService()
     const startDate = new Date('2025-01-01')

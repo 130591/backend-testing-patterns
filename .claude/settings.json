@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx jest *)",
+      "Bash(./node_modules/.bin/jest src/__test__/just-unit-test/problem)"
+    ]
+  }
+}

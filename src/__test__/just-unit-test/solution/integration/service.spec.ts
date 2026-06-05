@@ -5,7 +5,9 @@ import { createAppointment, createDoctor, createPatient, createPatientWithAppoin
 
 describe("AnalyticsService", () => {
   beforeAll(setupDatabase)
-  afterEach(truncateDatabase)
+  // Limpa ANTES de cada teste: garante slate limpo mesmo se o suite anterior
+  // (e2e) deixou resíduo, já que eles também truncam no beforeEach.
+  beforeEach(truncateDatabase)
   afterAll(closeDatabase)
   
   it("deve calcular a taxa de no-show", async () => {
@@ -36,7 +38,6 @@ describe("AnalyticsService", () => {
     const service = new AnalyticsService()
     const result = await service.getPatientStats(new Date('2025-01-01'), new Date('2025-12-31'))
 
-   console.log('result', result)
     expect(result).toMatchObject({
      newPatients: 1,
      activePatients: 0,
