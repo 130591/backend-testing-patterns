@@ -1,5 +1,7 @@
 import 'reflect-metadata'
 import { AppDataSource } from '../../config/data-source'
+import { Doctor } from '../../entities/Doctor'
+import { Patient } from '../../entities/Patient'
 
 export async function setupDatabase(): Promise<void> {
   if (!AppDataSource.isInitialized) {
